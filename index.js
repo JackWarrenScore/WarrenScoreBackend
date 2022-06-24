@@ -1,3 +1,12 @@
+const knex = require('knex')({
+    client: 'pg',
+    connection: {
+      database: 'WarrenScoreDB',
+      user:     'postgres',
+      password: 'a'
+    }
+});
+
 let cors = require("cors");
 
 const express = require('express')
@@ -5,26 +14,9 @@ const app = express()
 
 app.use(cors());
 
-let people = [
-    {
-        name: "Hannah Rickard",
-        number: "06-51-99-56-83",
-        id: 1
-    },
-    {
-        name: "Hyun Namkoong",
-        number: "10987654",
-        id: 2
-    },
-    {
-        name: "Courtney Martinez",
-        number: "3691215",
-        id: 3
-    }
-]
 
-app.get('/', (request, response) => {
-    response.send('Nice, bro.')
+app.post('/campaigns/create', (request, response) => {
+    response.json({'status':'Great success!'});
 })
 
 const PORT = 3000
