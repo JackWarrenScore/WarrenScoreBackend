@@ -23,11 +23,12 @@ app.get('/', (req, res) => {
     res.send('hello world')
   })
 
+//TODO: Create Unique Id
+//TODO: Send to database
+//TODONE: Send to frontend.
 app.get('/generateAvailableCampaignId', (req, res) => {
-    res.json({
-        'status':'200',
-        'campaignId': 8675309
-    });
+    const randomId = Math.floor(Math.random() * 99999999999)
+    res.send({'uniqueId': randomId})
 })
 
 const PORT = 3000
