@@ -31,6 +31,11 @@ app.get('/generateAvailableCampaignId', (req, res) => {
     res.send({'uniqueId': randomId})
 })
 
+app.post('/upsertCampaignConfig', (req, res) => {
+  console.log(req.body);
+  res.send({'Nice':'Great job'});
+})
+
 const PORT = 3000
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
