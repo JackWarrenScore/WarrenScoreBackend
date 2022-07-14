@@ -1,4 +1,4 @@
-var campaignRoutes = require('./Routes/Campaigns/CampaignRoutes');
+// var campaignRoutes = require('./Routes/Campaigns/CampaignRoutes');
 
 const knex = require('knex')({
     client: 'pg',
@@ -9,19 +9,21 @@ const knex = require('knex')({
     }
 });
 
-let cors = require("cors");
-
+const cors = require("cors");
+const bp = require('body-parser')
 const express = require('express')
 const app = express()
 
-require('./Routes/Campaigns/CampaignRoutes')(app);
+// require('./Routes/Campaigns/CampaignRoutes')(app);
 
 app.use(cors());
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 
 // app.use('/campaigns/', campaignRoutes[0]);
 app.get('/', (req, res) => {
     res.send('hello world')
-  })
+})
 
 //TODO: Create Unique Id
 //TODO: Send to database
@@ -32,8 +34,9 @@ app.get('/generateAvailableCampaignId', (req, res) => {
 })
 
 app.post('/upsertCampaignConfig', (req, res) => {
+  console.log('Upsert endpoint got hit!')
   console.log(req.body);
-  res.send({'Nice':'Great job'});
+  res.send({'Success':'Great job!'});
 })
 
 const PORT = 3000
