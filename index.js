@@ -1,5 +1,6 @@
 // var campaignRoutes = require('./Routes/Campaigns/CampaignRoutes');
 
+//TODO: KNEX implementation for database interface
 const knex = require('knex')({
     client: 'pg',
     connection: {
@@ -25,12 +26,30 @@ app.get('/', (req, res) => {
     res.send('hello world')
 })
 
-//TODO: Create Unique Id
-//TODO: Send to database
+//TODONE: Create Unique Id
+//TODONE: Send to database
+//TODO: Actually pass in the owner (however I decided to handle that biz later...)
 //TODONE: Send to frontend.
 app.get('/generateAvailableCampaignId', (req, res) => {
-    const randomId = Math.floor(Math.random() * 99999999999)
-    res.send({'uniqueId': randomId})
+    knex.insert({
+      owner: 'Jackson Ennis'
+    })
+    .returning('id')
+    .into('campaign')
+    .then(function (id) {
+      const idInt = id[0].id;
+      console.log(`New campaign generated with the ID: ${idInt}`);
+      
+      //We're creating an async function to demand that we wait until each table gets done with
+      //it's inserts are completed. The function gets called immediately.
+      (async () => {
+        await knex.insert({campaign_id: idInt}).into('campaign_config');
+        await knex.insert({campaign_id: idInt}).into('campaign_mailing_list');
+        await knex.insert({campaign_id: idInt}).into('campaign_code');
+      })();
+            
+      res.send({'uniqueId': idInt})
+    });
 })
 
 app.post('/upsertCampaignConfig', (req, res) => {
