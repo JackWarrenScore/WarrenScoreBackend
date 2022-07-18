@@ -42,19 +42,55 @@ app.get('/generateAvailableCampaignId', (req, res) => {
       
       //We're creating an async function to demand that we wait until each table gets done with
       //it's inserts are completed. The function gets called immediately.
-      (async () => {
-        await knex.insert({campaign_id: idInt}).into('campaign_config');
-        await knex.insert({campaign_id: idInt}).into('campaign_mailing_list');
-        await knex.insert({campaign_id: idInt}).into('campaign_code');
-      })();
+      // (async () => {
+      //   await knex.insert({campaign_id: idInt}).into('campaign_config');
+      //   await knex.insert({campaign_id: idInt}).into('campaign_mailing_list');
+      //   await knex.insert({campaign_id: idInt}).into('campaign_code');
+      // })();
             
       res.send({'uniqueId': idInt})
     });
 })
 
 app.post('/upsertCampaignConfig', (req, res) => {
-  console.log('Upsert endpoint got hit!')
-  console.log(req.body);
+  const campaignId = req.body.campaignId;
+  const configData = req.body.configData;
+  knex.insert({
+    campaign_id: campaignId,
+    shape_max_size: configData.SHAPE_MAX,
+    plus_modifier_amount: configData["*"],
+    times_modifier_amount: configData["*"],
+    power_modifier_amount: configData["^"],
+    undefined_modifier_amount: configData["u"],
+    radius_maximum: configData.RADIUS_MAX,
+    score_type: configData.SCORE_TYPE
+  })
+  .into('campaign_config')
+  .onConflict('campaign_id')
+  .merge()
+  .then(function () {
+    res.send({'Success':'Great job!'});
+  })
+})
+
+app.post('/upsertCampaignMailingList', (req, res) => {
+  console.log("We've been hit.");
+  const campaignId = req.body.campaignId;
+  const campaignRecipients = req.body.campaignRecipients;
+
+  for(const index in campaignRecipients) {
+    knex.insert({
+      campaign_id: campaignId,
+      email: campaignRecipients[index]
+    })
+    .into('campaign_mailing_list')
+    .onConflict(['email', 'campaign_id'])
+    .merge()
+    .then(function () {
+      console.log(`Just added participant index: ${campaignRecipients[index]}`)
+    })
+  }
+
   res.send({'Success':'Great job!'});
 })
 

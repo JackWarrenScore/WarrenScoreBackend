@@ -14,35 +14,24 @@ CREATE TABLE campaign (
 );
 
 CREATE TABLE campaign_config (
-    campaign_id INTEGER,
+    campaign_id INTEGER PRIMARY KEY,
     shape_max_size INTEGER,
     plus_modifier_amount INTEGER,
     times_modifier_amount INTEGER,
     power_modifier_amount INTEGER,
     undefined_modifier_amount INTEGER,
     radius_maximum INTEGER,
-    score_type VARCHAR(3),
-
-    CONSTRAINT fk_campaign
-    FOREIGN KEY(campaign_id)
-    REFERENCES campaign(id)
+    score_type VARCHAR(3)
 );
 
 CREATE TABLE campaign_mailing_list (
     campaign_id INTEGER,
     email VARCHAR(60),
-
-    CONSTRAINT fk_campaign
-    FOREIGN KEY(campaign_id)
-    REFERENCES campaign(id)
+    PRIMARY KEY(campaign_id, email)
 );
 
 CREATE TABLE campaign_code (
-    campaign_id INTEGER,
-    code TEXT,
-
-    CONSTRAINT fk_campaign
-    FOREIGN KEY(campaign_id)
-    REFERENCES campaign(id)
+    campaign_id INTEGER PRIMARY KEY,
+    code TEXT
 );
 
