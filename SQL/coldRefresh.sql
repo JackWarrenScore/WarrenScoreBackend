@@ -15,6 +15,8 @@ CREATE TABLE campaign (
 
 CREATE TABLE campaign_config (
     campaign_id INTEGER PRIMARY KEY,
+    title TEXT,
+    description TEXT,
     shape_max_size INTEGER,
     plus_modifier_amount INTEGER,
     times_modifier_amount INTEGER,
