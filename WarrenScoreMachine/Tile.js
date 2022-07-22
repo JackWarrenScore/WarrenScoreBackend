@@ -9,6 +9,8 @@ module.exports = class Tile {
         }
     }
 
+    setValue(modifier){ this.tile.value = modifier; }
+
     setUpModifier(modifier){ this.tile.up_modifier = modifier; }
 
     setLeftModifier(modifier) { this.tile.left_modifier = modifier; }
