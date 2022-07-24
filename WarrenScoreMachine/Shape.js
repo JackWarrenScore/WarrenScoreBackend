@@ -1,4 +1,6 @@
 const { json } = require("body-parser");
+const Point = require("./Point.js");
+const ShapeGeneratorAssistant = require("./ShapeGeneratorAssistant.js");
 var Tile = require("./Tile.js");
 
 module.exports = class Shape {
@@ -14,6 +16,7 @@ module.exports = class Shape {
             "u": config["undefined_modifier_amount"]            
         }
         
+        const shapeGeneratorAssistant = new ShapeGeneratorAssistant();
 
         for(let i = 0; i < randomizedShapeSize; i++){
             const tile = new Tile();
@@ -22,12 +25,31 @@ module.exports = class Shape {
             tile.setLeftModifier(this.getWeightedRandomSelection(probabilities));
             tile.setDownModifier(this.getWeightedRandomSelection(probabilities));
             tile.setRightModifier(this.getWeightedRandomSelection(probabilities));
+
+            console.log("Generating new tile...");
+            console.log(tile.toString());
+            console.log("Getting new position...");
+            const currentPoint = shapeGeneratorAssistant.getUnusedPoint();
+            console.log(`Position recieved: ${currentPoint}`);
+            tile.setX(currentPoint.getX());
+            tile.setY(currentPoint.getY());
             this.tiles.push(tile);
+
+            console.log('\n\n')
+
         }
     }
 
     getTiles(){
         return this.tiles;
+    }
+
+    getShapeJSON(){
+        let shapeJSON = []
+        this.tiles.forEach((tile) => {
+            shapeJSON.push(tile.getJSON())
+        })
+        return shapeJSON;
     }
 
     getWeightedValue(r){

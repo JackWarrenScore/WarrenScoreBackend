@@ -5,9 +5,15 @@ module.exports = class Tile {
             "up_modifier":"",
             "left_modifier":"",
             "down_modifier":"",
-            "right_modifier":""
+            "right_modifier":"",
+            "x":null,
+            "y":null
         }
     }
+
+    setX(xCoord){ this.tile.x = xCoord; }
+
+    setY(yCoord){ this.tile.y = yCoord; }
 
     setValue(modifier){ this.tile.value = modifier; }
 
@@ -20,4 +26,6 @@ module.exports = class Tile {
     setRightModifier(modifier) { this.tile.right_modifier = modifier; }
 
     toString() { return `Tile: ${this.tile.value} ${this.tile.up_modifier}${this.tile.left_modifier}${this.tile.down_modifier}${this.tile.right_modifier}`; }
+
+    getJSON() { return this.tile; }
 }

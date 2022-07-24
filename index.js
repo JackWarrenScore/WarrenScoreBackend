@@ -13,7 +13,6 @@ require('./Routes/Campaigns/CampaignConfigRoutes')(app);
 require('./Routes/Campaigns/CampaignCreationRoutes')(app);
 require('./Routes/Campaigns/CampaignMailingListRoutes')(app);
 
-
 const aptitudeTestGenerator = new AptitudeTestGenerator({
     'test_length': 7,
     'shape_max_size': 4,
@@ -23,8 +22,9 @@ const aptitudeTestGenerator = new AptitudeTestGenerator({
     'power_modifier_amount': 1,
     'undefined_modifier_amount': 5
 });
+    
+console.log(aptitudeTestGenerator.getJSON());
 
-aptitudeTestGenerator.getShapes().forEach(shape => shape.getTiles().forEach(tile => console.log(tile.toString())));
 
 app.get('/', (req, res) => {
     res.send('hello world')

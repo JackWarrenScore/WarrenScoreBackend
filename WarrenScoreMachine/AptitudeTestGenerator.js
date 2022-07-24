@@ -10,5 +10,16 @@ module.exports = class AptitudeTestGenerator {
         }
     }
 
+    //TODO: save the test tiles to thedatabase.
+    //TODO: generate a unique test code.
+
     getShapes(){ return this.shapes; }
+
+    getJSON() {
+        let testJSON = []
+        this.shapes.forEach((shape) => {
+            testJSON.push(shape.getShapeJSON())
+        })
+        return testJSON;
+    }
 }
