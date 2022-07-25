@@ -3,7 +3,7 @@ const knex = require('knex')({
     connection: {
       database: 'WarrenScoreDB',
       user:     'postgres',
-      password: 'a'
+      password: 'aaaa'
     }
 });
 
@@ -14,7 +14,7 @@ module.exports = function(app){
     //TODONE: Send to database
     //TODO: Actually pass in the owner (however I decided to handle that biz later...)
     //TODONE: Send to frontend.
-    app.get('/generateAvailableCampaignId', (req, res) => {
+    app.get('/generate-available-campaign-id', (req, res) => {
         knex.insert({
         owner: 'Jackson Ennis'
         })
@@ -28,7 +28,7 @@ module.exports = function(app){
         });
     })
 
-    app.get('/getAllCampaigns', (req, res) => {
+    app.get('/get-all-campaigns', (req, res) => {
         knex.select('campaign_id', 'title', 'shape_max_size', 'radius_maximum', 'score_type').from('campaign_config').then(data => res.send(data));
     })
 }

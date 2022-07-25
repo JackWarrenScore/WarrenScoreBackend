@@ -19,7 +19,7 @@ function isConfigValid(config){
 
 module.exports = function(app){ 
 
-  app.post('/upsertCampaignConfig', (req, res) => {
+  app.post('/upsert-campaign-config', (req, res) => {
     const campaignId = req.body.campaignId;
     const configData = req.body.configData;
     knex.insert({
@@ -42,7 +42,7 @@ module.exports = function(app){
     })
   })
 
-  app.post('/getConfig', (req, res) => {
+  app.post('/get-config', (req, res) => {
     const campaignId = req.body.campaignId;
     knex.select('campaign_id', 'title', 'description', 'shape_max_size', 'plus_modifier_amount', 'times_modifier_amount', 'power_modifier_amount', 'undefined_modifier_amount', 'radius_maximum', 'score_type')
       .where({campaign_id: campaignId})

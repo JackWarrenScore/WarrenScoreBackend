@@ -1,5 +1,5 @@
 
-const AptitudeTestGenerator = require("./WarrenScoreMachine/AptitudeTestGenerator");
+const AptitudeTestGenerator = require("./aptitests-generator/AptitudeTestGenerator");
 const cors = require("cors");
 const bp = require('body-parser')
 const express = require('express')
@@ -9,22 +9,11 @@ app.use(cors());
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
-require('./Routes/Campaigns/CampaignConfigRoutes')(app);
-require('./Routes/Campaigns/CampaignCreationRoutes')(app);
-require('./Routes/Campaigns/CampaignMailingListRoutes')(app);
+require('./routes/campaigns/campaign-config-routes')(app);
+require('./routes/campaigns/campaign-creation-routes')(app);
+require('./routes/campaigns/campaign-mailing-list-routes')(app);
 
-const aptitudeTestGenerator = new AptitudeTestGenerator({
-    'test_length': 7,
-    'shape_max_size': 4,
-    'radius_maximum': 5,
-    'plus_modifier_amount': 3,
-    'times_modifier_amount': 5,
-    'power_modifier_amount': 1,
-    'undefined_modifier_amount': 5
-});
-    
-console.log(aptitudeTestGenerator.getJSON());
-
+require('./routes/aptitests/aptitude-demo-routes')(app);
 
 app.get('/', (req, res) => {
     res.send('hello world')

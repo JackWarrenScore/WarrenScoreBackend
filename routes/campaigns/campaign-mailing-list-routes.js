@@ -9,7 +9,7 @@ const knex = require('knex')({
 
 
 module.exports = function(app){
-    app.post('/upsertCampaignMailingList', (req, res) => {
+    app.post('/upsert-campaign-mailing-list', (req, res) => {
         console.log("We've been hit.");
         const campaignId = req.body.campaignId;
         const campaignRecipients = req.body.campaignRecipients;
@@ -30,7 +30,7 @@ module.exports = function(app){
         res.send({'Success':'Great job!'});
       })
 
-      app.post('/getMailingList', (req, res) => {
+      app.post('/get-mailing-list', (req, res) => {
         const campaignId = req.body.campaignId;
         knex.select('email')
           .where({campaign_id: campaignId})

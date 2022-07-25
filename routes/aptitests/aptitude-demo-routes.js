@@ -1,6 +1,6 @@
 module.exports = function(app){ 
 
-    app.post('/machineTest', (req, res) => {
+    app.post('/machine-test', (req, res) => {
         const aptitudeTestGenerator = new AptitudeTestGenerator({
             'test_length': 7,
             'shape_max_size': 4,
@@ -13,6 +13,6 @@ module.exports = function(app){
         
         aptitudeTestGenerator.getShapes().forEach(shape => console.log(shape.getTiles()));
 
-        res.send("Nice");
+        res.send(aptitudeTestGenerator.getJSON());
     })
 }
