@@ -1,6 +1,8 @@
+const AptitudeTestGenerator = require('../../aptitests-generator/AptitudeTestGenerator.js');
+
 module.exports = function(app){ 
 
-    app.post('/machine-test', (req, res) => {
+    app.post('/get-demo-test', (req, res) => {
         const aptitudeTestGenerator = new AptitudeTestGenerator({
             'test_length': 7,
             'shape_max_size': 4,
