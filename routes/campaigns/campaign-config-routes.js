@@ -31,6 +31,7 @@ module.exports = function(app){
       campaign_id: campaignId,
       title: configData.TITLE,
       description: configData.DESCRIPTION,
+      test_length: configData.TEST_LENGTH,
       shape_max_size: configData.SHAPE_MAX,
       plus_modifier_amount: configData["*"],
       times_modifier_amount: configData["*"],
@@ -49,7 +50,7 @@ module.exports = function(app){
 
   app.post('/get-config', (req, res) => {
     const campaignId = req.body.campaignId;
-    knex.select('campaign_id', 'title', 'description', 'shape_max_size', 'plus_modifier_amount', 'times_modifier_amount', 'power_modifier_amount', 'undefined_modifier_amount', 'radius_maximum', 'score_type')
+    knex.select('campaign_id', 'title', 'description', 'test_length', 'shape_max_size', 'plus_modifier_amount', 'times_modifier_amount', 'power_modifier_amount', 'undefined_modifier_amount', 'radius_maximum', 'score_type')
       .where({campaign_id: campaignId})
       .from('campaign_config')
       .then(data => res.send(data[0]));
