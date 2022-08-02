@@ -13,7 +13,7 @@ require('./routes/campaigns/campaign-config-routes')(app);
 require('./routes/campaigns/campaign-creation-routes')(app);
 require('./routes/campaigns/campaign-mailing-list-routes')(app);
 
-require('./routes/aptitests/aptitude-demo-routes')(app);
+require('./routes/aptitests/aptitest-routes')(app);
 
 app.get('/', (req, res) => {
     res.send('hello world')

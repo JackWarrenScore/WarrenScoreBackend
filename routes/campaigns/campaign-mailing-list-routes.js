@@ -10,7 +10,6 @@ const knex = require('knex')({
 
 module.exports = function(app){
     app.post('/upsert-campaign-mailing-list', (req, res) => {
-        console.log("We've been hit.");
         const campaignId = req.body.campaignId;
         const campaignRecipients = req.body.campaignRecipients;
       
@@ -22,9 +21,7 @@ module.exports = function(app){
           .into('campaign_mailing_list')
           .onConflict(['email', 'campaign_id'])
           .merge()
-          .then(function () {
-            console.log(`Just added participant index: ${campaignRecipients[index]}`)
-          })
+          .then(function () {})
         }
       
         res.send({'Success':'Great job!'});
@@ -36,7 +33,6 @@ module.exports = function(app){
           .where({campaign_id: campaignId})
           .from('campaign_mailing_list')
           .then(data => {
-            console.log(data)
             res.send(data)
           });
       })

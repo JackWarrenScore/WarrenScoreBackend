@@ -17,6 +17,7 @@ CREATE TABLE campaign_config (
     campaign_id INTEGER PRIMARY KEY,
     title TEXT,
     description TEXT,
+    test_length INTEGER,
     shape_max_size INTEGER,
     plus_modifier_amount INTEGER,
     times_modifier_amount INTEGER,
@@ -34,6 +35,6 @@ CREATE TABLE campaign_mailing_list (
 
 CREATE TABLE campaign_code (
     campaign_id INTEGER PRIMARY KEY,
-    code TEXT
+    aptitest_key TEXT
 );
 

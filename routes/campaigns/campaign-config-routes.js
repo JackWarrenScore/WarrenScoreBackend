@@ -16,6 +16,11 @@ function isConfigValid(config){
     return true;
 }
 
+//THIS ISN'T WORKING BECAUSE I NEED TO ADD THE test_length attribute to the
+//DATABASE
+//FRONTEND CONFIG PAGE
+//BACKEND INSERTION
+//UPSERT CAMPAIGN CONFIG ROUTE
 
 module.exports = function(app){ 
 
