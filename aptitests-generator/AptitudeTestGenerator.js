@@ -1,15 +1,20 @@
-var Shape = require("./Shape.js");
+const Shape = require("./Shape.js");
+const TestGeneratorMapper = require("./TestGeneratorMapper.js");
 
 module.exports = class AptitudeTestGenerator {
     
     constructor(config) {
         this.shapes = [];
 
-        console.log(`Config: ${JSON.stringify(config)}`)
-        console.log(`Does the constructor get called?`)
+        let testGeneratorMapper = new TestGeneratorMapper();
     
         for(let i = 0; i < config.test_length; i++){
-            this.shapes.push(new Shape(config));   
+            let shape = new Shape(config);
+            let freeAbsolutePoint = testGeneratorMapper.placeShape(shape);
+            console.log(`SUSPECT IN QUESTION IS ${freeAbsolutePoint}`)
+            shape.setShapeAbsolutePoint(freeAbsolutePoint);
+            this.shapes.push(shape);
+
         }
     }
 
@@ -18,7 +23,6 @@ module.exports = class AptitudeTestGenerator {
     getJSON() {
         let testJSON = []
         this.shapes.forEach((shape) => {
-            console.log(shape);
             testJSON.push(shape.getShapeJSON())
         })
         return testJSON;

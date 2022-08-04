@@ -1,3 +1,5 @@
+const Point = require("./Point.js");
+
 module.exports = class Tile {
     constructor(){
         this.tile = {
@@ -28,4 +30,6 @@ module.exports = class Tile {
     toString() { return `Tile: ${this.tile.value} ${this.tile.up_modifier}${this.tile.left_modifier}${this.tile.down_modifier}${this.tile.right_modifier}`; }
 
     getJSON() { return this.tile; }
+
+    getRelativePoint() { return new Point(this.x, this.y); }
 }

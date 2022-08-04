@@ -15,9 +15,9 @@ module.exports = class ShapeGeneratorAssistant {
         this.usedPoints.push(removedPoint.toString());
 
         this.modifiers.forEach((modifier) => {
-            console.log(`Is ${removedPoint.getThisPlusPoint(modifier).toString()} in ${this.usedPoints}`)
-            if( ! this.usedPoints.includes(removedPoint.getThisPlusPoint(modifier).toString())){
-                this.unusedPoints.push(removedPoint.getThisPlusPoint(modifier));
+            console.log(`Is ${removedPoint.plus(modifier).toString()} in ${this.usedPoints}`)
+            if( ! this.usedPoints.includes(removedPoint.plus(modifier).toString())){
+                this.unusedPoints.push(removedPoint.plus(modifier));
                 console.log("No!")
             }
             else{

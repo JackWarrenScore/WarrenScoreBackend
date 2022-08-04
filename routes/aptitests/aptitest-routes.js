@@ -21,9 +21,10 @@ module.exports = function(app){
             'power_modifier_amount': 1,
             'undefined_modifier_amount': 5
         });
-        
-        aptitudeTestGenerator.getShapes().forEach(shape => console.log(shape.getTiles()));
 
+        console.log(`\n\n ${aptitudeTestGenerator.getShapes().length} \n\n`)
+        
+        //TODO: The getJSON function seems to be broken. Investigate further.
         res.send(aptitudeTestGenerator.getJSON());
     })
 

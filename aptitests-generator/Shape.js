@@ -1,7 +1,7 @@
 const { json } = require("body-parser");
 const Point = require("./Point.js");
 const ShapeGeneratorAssistant = require("./ShapeGeneratorAssistant.js");
-var Tile = require("./Tile.js");
+const Tile = require("./Tile.js");
 
 module.exports = class Shape {
     constructor(config){
@@ -44,10 +44,18 @@ module.exports = class Shape {
         return this.tiles;
     }
 
+    setShapeAbsolutePoint(p){
+        this.x = p.getX();
+        this.y = p.getY();
+    }
     getShapeJSON(){
-        let shapeJSON = []
+        let shapeJSON = {
+            "tiles": [],
+            "x": 999,
+            "y": 999
+        }
         this.tiles.forEach((tile) => {
-            shapeJSON.push(tile.getJSON())
+            shapeJSON["tiles"].push(tile.getJSON())
         })
         return shapeJSON;
     }
