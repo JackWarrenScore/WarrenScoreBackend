@@ -4,17 +4,18 @@ const TestGeneratorMapper = require("./TestGeneratorMapper.js");
 module.exports = class AptitudeTestGenerator {
     
     constructor(config) {
+        console.log("***********************Creating new aptitude test generator***********************")
         this.shapes = [];
 
         let testGeneratorMapper = new TestGeneratorMapper();
     
         for(let i = 0; i < config.test_length; i++){
             let shape = new Shape(config);
+            console.log(`Shape ${i} of ${config.test_length} created.`)
             let freeAbsolutePoint = testGeneratorMapper.placeShape(shape);
-            console.log(`SUSPECT IN QUESTION IS ${freeAbsolutePoint}`)
+            console.log(`Placement position found! ${freeAbsolutePoint}`)
             shape.setShapeAbsolutePoint(freeAbsolutePoint);
             this.shapes.push(shape);
-
         }
     }
 

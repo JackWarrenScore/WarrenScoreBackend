@@ -31,5 +31,7 @@ module.exports = class Tile {
 
     getJSON() { return this.tile; }
 
-    getRelativePoint() { return new Point(this.x, this.y); }
+    getRelativePoint() {
+        return new Point(this.tile.x, this.tile.y);
+    }
 }

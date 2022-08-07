@@ -19,24 +19,17 @@ module.exports = class Shape {
         const shapeGeneratorAssistant = new ShapeGeneratorAssistant();
 
         for(let i = 0; i < randomizedShapeSize; i++){
-            const tile = new Tile();
+            let tile = new Tile();
             tile.setValue(this.getWeightedValue(config.radius_maximum));
             tile.setUpModifier(this.getWeightedRandomSelection(probabilities));
             tile.setLeftModifier(this.getWeightedRandomSelection(probabilities));
             tile.setDownModifier(this.getWeightedRandomSelection(probabilities));
             tile.setRightModifier(this.getWeightedRandomSelection(probabilities));
 
-            console.log("Generating new tile...");
-            console.log(tile.toString());
-            console.log("Getting new position...");
             const currentPoint = shapeGeneratorAssistant.getUnusedPoint();
-            console.log(`Position recieved: ${currentPoint}`);
             tile.setX(currentPoint.getX());
             tile.setY(currentPoint.getY());
             this.tiles.push(tile);
-
-            console.log('\n\n')
-
         }
     }
 
@@ -51,8 +44,8 @@ module.exports = class Shape {
     getShapeJSON(){
         let shapeJSON = {
             "tiles": [],
-            "x": 999,
-            "y": 999
+            "x": this.x,
+            "y": this.y
         }
         this.tiles.forEach((tile) => {
             shapeJSON["tiles"].push(tile.getJSON())

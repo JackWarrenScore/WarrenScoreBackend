@@ -22,15 +22,12 @@ module.exports = function(app){
             'undefined_modifier_amount': 5
         });
 
-        console.log(`\n\n ${aptitudeTestGenerator.getShapes().length} \n\n`)
-        
         //TODO: The getJSON function seems to be broken. Investigate further.
         res.send(aptitudeTestGenerator.getJSON());
     })
 
     app.post('/upsert-aptitest-key', (req, res) => {
         const campaignId = req.body.campaignId;
-        console.log(`Campaign Id: ${campaignId}`);
         knex.select('test_length', 'shape_max_size', 'plus_modifier_amount', 'times_modifier_amount', 'power_modifier_amount', 'undefined_modifier_amount', 'radius_maximum', 'score_type')
             .where({campaign_id: campaignId})
             .from('campaign_config')
@@ -38,9 +35,7 @@ module.exports = function(app){
                 const data = dataArray[0]
                 let aptitudeTestGenerator = new AptitudeTestGenerator(data);
 
-                console.log("BEFORE:")
                 aptitudeTestGenerator.getShapes().forEach(shape => console.log(shape.getTiles()));
-                console.log("^^AFTER^^")
 
                 knex.insert({
                     campaign_id: campaignId,

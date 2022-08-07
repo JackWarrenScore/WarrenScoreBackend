@@ -22,7 +22,6 @@ module.exports = function(app){
         .into('campaign')
         .then(function (id) {
         const idInt = id[0].id;
-        console.log(`New campaign generated with the ID: ${idInt}`);
 
         res.send({'uniqueId': idInt})
         });
