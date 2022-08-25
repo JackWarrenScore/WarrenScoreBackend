@@ -16,9 +16,6 @@ module.exports = class ShapeGeneratorAssistant {
             if( ! this.usedPoints.includes(removedPoint.plus(modifier).toString())){
                 this.unusedPoints.push(removedPoint.plus(modifier));
             }
-            else{
-                console.log("Yes!")
-            }
         })
 
         return removedPoint;

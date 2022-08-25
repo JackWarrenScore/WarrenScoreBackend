@@ -7,66 +7,60 @@ module.exports = class TestGeneratorMapper {
         this.LEFT = new Point(-1,0);
         this.DOWN = new Point(0,-1);
         this.RIGHT = new Point(0,1);
-        this.availablePoints = [new Point(0, 0)];
-        this.usedPoints = new Set();
+
+        this.unavailablePoints = [];
+        this.pointsOpenAroundPerimeter = [new Point(0,0)]
+        this.stringsOpenAroundPerimeter = [new Point(0, 0).toString()];
+        this.usedStrings = new Set();
     }
 
     placeShape(shape){
+
+        console.log(`Placing new shape...`)
+
         const tiles = shape.getTiles();
         let rootedPoint = null;
 
-        console.log(`Iteration ${this.iteration}`);
-        console.log(`Currently available points: ${this.availablePoints}`);
+        for(let i = this.pointsOpenAroundPerimeter.length - 1; i >= 0; i--){
+            const potentialGroundingPoint = this.pointsOpenAroundPerimeter[i];
+            const potentialGroundingString = this.stringsOpenAroundPerimeter[i];
 
-        for(let i = 0; i < this.availablePoints.length; i++) {
-            const groundingPoint = this.availablePoints[i];
-            
+            //Check to see if each tile can be placed
             let isValidPlacement = true;
             tiles.forEach((tile) => {
-                isValidPlacement = isValidPlacement && (!this.usedPoints.has(tile.getRelativePoint().plus(groundingPoint).toString()))
+                //Make sure the new location isn't already used.
+                isValidPlacement = isValidPlacement && (! this.usedStrings.has(tile.getRelativePoint().plus(potentialGroundingPoint).toString()));
             })
 
-            if(isValidPlacement){
-                for(let ii = 0; ii < tiles.length; ii++){
-                    let tile = tiles[ii];
-                    
-                    //Either something here is wrong with the tile (am i just storing jsons?)
-                    //Or something is wrong with the .getRelativePoint() function.
+            //Now we know that all the tiles can be placed
+            //So lets add new points to the perimeter lists 
+            if(isValidPlacement) {
+                console.log("Placement is valid!");
 
-                    let relativeUsedPoint = tile.getRelativePoint();
-                    console.log(`Relative Used Point ${relativeUsedPoint}`)
-                    let newlyUsedPoint = relativeUsedPoint.plus(groundingPoint);
+                tiles.forEach((tile) => {
 
-                    console.log(`Currently used points: ${[...this.usedPoints]}`)
 
-                    if(! this.usedPoints.has(newlyUsedPoint.plus(this.UP).toString())){
-                        console.log("UP has not been taken.")
-                        this.availablePoints.push(newlyUsedPoint.plus(this.UP));
-                    }
-                    if(! this.usedPoints.has(newlyUsedPoint.plus(this.LEFT).toString())){
-                        console.log("LEFT has not been taken.")
-                        this.availablePoints.push(newlyUsedPoint.plus(this.LEFT));
-                    }
-                    if(! this.usedPoints.has(newlyUsedPoint.plus(this.DOWN).toString())){
-                        console.log("DOWN has not been taken.")
-                        this.availablePoints.push(newlyUsedPoint.plus(this.DOWN));
-                    }
-                    if(! this.usedPoints.has(newlyUsedPoint.plus(this.RIGHT).toString())){
-                        console.log("RIGHT has not been taken.")
-                        this.availablePoints.push(newlyUsedPoint.plus(this.RIGHT));
-                    }
+                    const newlyUsedPoint = tile.getRelativePoint().plus(potentialGroundingPoint);
+                    const newlyUsedPointIndex = this.stringsOpenAroundPerimeter.indexOf(newlyUsedPoint.toString())
 
-                    this.availablePoints.splice(this.availablePoints.indexOf(newlyUsedPoint), 1)
-                    this.usedPoints.add(newlyUsedPoint.toString());
-                }
+                    this.pointsOpenAroundPerimeter.splice(this.pointsOpenAroundPerimeter, 1);
+                    this.stringsOpenAroundPerimeter.splice(this.stringsOpenAroundPerimeter, 1);
+                    this.usedStrings.add(newlyUsedPoint.toString());
 
-                rootedPoint = groundingPoint;
-                break;
+                    [this.UP, this.LEFT, this.DOWN, this.RIGHT].forEach((direction) => {
+                        const newPerimeterPosition = newlyUsedPoint.plus(direction);
+                        if(! this.usedStrings.has(newPerimeterPosition.toString())){
+                            this.pointsOpenAroundPerimeter.push(newPerimeterPosition);
+                            this.stringsOpenAroundPerimeter.push(newPerimeterPosition.toString());
+                        }
+                    })
+                })
+
+                return potentialGroundingPoint;
+
             }
 
+            return potentialGroundingPoint;
         }
-
-        this.iteration += 1;
-        return rootedPoint;
     }
 }
