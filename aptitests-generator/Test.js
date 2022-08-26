@@ -14,5 +14,5 @@ tile2.setValue(5);
 tile2.setX(0);
 tile2.setY(1);
 
-pa.internalPlaceTile(tile1, new Point(0,0));
-pa.internalPlaceTile(tile2, new Point(0,1));
+pa._placeTile(tile1, new Point(0,0));
+pa._placeTile(tile2, new Point(0,1));

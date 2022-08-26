@@ -10,7 +10,7 @@ module.exports = class Point {
     addToX(amount) { this.x += amount; }
     addToY(amount) { this.y += amount; }
 
-    plus(point) { return new Point(this.x + point.getX(), this.y + point.getY()); }
+    plus(point) { return new Point(point.getX() + this.x, point.getY() + this.y); }
 
     toString(){ return `(${this.x}, ${this.y})`; }
 }
