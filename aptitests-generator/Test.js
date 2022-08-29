@@ -1,18 +1,26 @@
 const PlacementAssistant = require("./PlacementAssistant");
+
 const Tile = require("./Tile");
 const Point = require("./Point");
+const Shape = require("./Shape");
 
-let pa = new PlacementAssistant();
+const GridSolver = require("./GridSolver");
 
-let tile1 = new Tile();
-tile1.setValue(10);
-tile1.setX(0);
-tile1.setY(0);
+const config = {
+    'test_length': 2,
+    'shape_max_size': 2,
+    'radius_maximum': 5,
+    'plus_modifier_amount': 3,
+    'times_modifier_amount': 5,
+    'power_modifier_amount': 1,
+    'undefined_modifier_amount': 5
+};
 
-let tile2 = new Tile();
-tile2.setValue(5);
-tile2.setX(0);
-tile2.setY(1);
+let shapes = [];
+for(let i = 0; i < config.test_length; i++){
+    let shape = new Shape(config);
+    console.log(`Shape ${i} has ${shape.getTiles().length} tiles`)
+    shapes.push(shape);
+}
 
-pa._placeTile(tile1, new Point(0,0));
-pa._placeTile(tile2, new Point(0,1));
+deepCopyPointsgridSolver = new GridSolver(shapes);
