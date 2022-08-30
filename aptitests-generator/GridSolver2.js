@@ -1,4 +1,5 @@
 const Point = require("./Point");
+const RailroadTrack = require("./RailroadTrack");
 var _ = require('lodash');
 
 module.exports = class GridSolver {
@@ -6,10 +7,18 @@ module.exports = class GridSolver {
         this.modifiers = [new Point(0,1), new Point(1,0), new Point(0, -1), new Point(-1, 0)];
         this.shapes = shapes;
     
-        this.hmm = [];
-        this.everyPossibleBoard = [];
+        let usedAnchors = new RailroadTrack(["POINT", "STRING"]);
 
-        const allBoardsTotal = this.getAllBoards([new Point(0,0)], [], this.shapes, []);        
+        let availableAnchors = new RailroadTrack(["POINT", "STRING"]);
+        availableAnchors.addTies(["POINT", "STRING"], [new Point(0,0), new Point(0,0).toString()]);
+        
+        let startingAnchor = new Point(0,0);
+
+        this.getAllBoards(availableAnchors, usedAnchors, shapes, board, 0);
+        // usedAnchors.addTies(["POINT", "STRING"], [new Point(0,0), new Point(0,0).toString()]);
+
+
+        // this.getAllBoards([new Point(0,0)], [], this.shapes, {}, 0);
     }
 
     canPlaceShape(anchorPoint, usedAnchors, tiles){
@@ -32,9 +41,7 @@ module.exports = class GridSolver {
     }
 
     placeShape(anchorPoint, usedAnchors, board, shape, availablePerimeterAnchors){
-        shape.setShapeAbsolutePoint(anchorPoint);
-        board.push(shape);
-        // board[anchorPoint.toString()] = shape;
+        board[anchorPoint.toString()] = shape;
         shape.getTiles().forEach((tile) => {
             const newlyUsedAbsolutePoint = tile.getRelativePoint().plus(anchorPoint);
             // console.log(`Placing tile at absolute point ${newlyUsedAbsolutePoint}`);
@@ -68,16 +75,14 @@ module.exports = class GridSolver {
         })
     }
 
-    getAllBoards(availablePerimeterAnchors, usedAnchors, availableShapes, board){
+    getAllBoards(availablePerimeterAnchors, usedAnchors, availableShapes, board, level){
 
         // console.log("Recursing into a new board iteration.");
 
         if(availableShapes.length === 0){
-            this.everyPossibleBoard.push(board);
-            return board;
+            console.log(`BOARD level ${level}: ${Object.keys(board)}`)
         }
         else{
-            let allCompletedBoards = [];
             for(let ii = 0; ii < availableShapes.length; ii++){
                 for(let i = 0; i < availablePerimeterAnchors.length; i++){
                 
@@ -92,17 +97,18 @@ module.exports = class GridSolver {
                         let availablePerimeterAnchorsCopy = _.cloneDeep(availablePerimeterAnchors);
                         let usedAnchorsCopy = _.cloneDeep(usedAnchors);
                         this.placeShape(prospectiveAnchor, usedAnchorsCopy, boardCopy, shape, availablePerimeterAnchorsCopy);
-
-
-                        let shapesCopy = _.cloneDeep(availableShapes);
+                        
+                        //I just need to not fast forward. I don't need to reinvent the wheel. Slice is killing me.
+                        //1. Copy shapes
+                        let shapesCopy = _.cloneDeep(shapes);
+                        //2. Remove my shape specifically.
                         shapesCopy.splice(ii, 1);
-                        const completedBoard = this.getAllBoards(availablePerimeterAnchorsCopy, usedAnchorsCopy, shapesCopy, boardCopy);
-                        allCompletedBoards.push(completedBoard);
+                        //3. Pass in available shapes
+
+                        this.getAllBoards(availablePerimeterAnchorsCopy, usedAnchorsCopy, shapesCopy, boardCopy, level++);
                     }
                 }
             }
-
-            return allCompletedBoards;
         }
     }
 }

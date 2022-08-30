@@ -1,6 +1,7 @@
 const PlacementAssistant = require("./PlacementAssistant.js");
 const Shape = require("./Shape.js");
 const TestGeneratorMapper = require("./TestGeneratorMapper.js");
+const GridSolver = require("./GridSolver");
 
 module.exports = class AptitudeTestGenerator {
     
@@ -17,6 +18,10 @@ module.exports = class AptitudeTestGenerator {
             shape.setShapeAbsolutePoint(freeAbsolutePoint);
             this.shapes.push(shape);
         }
+
+        let gridSolver = new GridSolver(this.shapes);
+        const solution = gridSolver.everyPossibleBoard[0];
+        this.shapes = solution;
     }
 
     getShapes(){ return this.shapes; }

@@ -8,7 +8,7 @@ const GridSolver = require("./GridSolver");
 
 const config = {
     'test_length': 2,
-    'shape_max_size': 2,
+    'shape_max_size': 3,
     'radius_maximum': 5,
     'plus_modifier_amount': 3,
     'times_modifier_amount': 5,
@@ -23,4 +23,13 @@ for(let i = 0; i < config.test_length; i++){
     shapes.push(shape);
 }
 
-deepCopyPointsgridSolver = new GridSolver(shapes);
+gridSolver = new GridSolver(shapes);
+
+console.log("Nice.");
+
+const solution = gridSolver.everyPossibleBoard[0];
+
+solution.forEach((shape) => {
+    console.log(shape.getShapeJSON())
+})
+
