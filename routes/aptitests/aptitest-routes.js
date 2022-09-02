@@ -13,7 +13,7 @@ module.exports = function(app){
 
     app.post('/get-demo-test', (req, res) => {
         const aptitudeTestGenerator = new AptitudeTestGenerator({
-            'test_length': 2,
+            'test_length': 3,
             'shape_max_size': 3,
             'radius_maximum': 5,
             'plus_modifier_amount': 3,
@@ -22,7 +22,6 @@ module.exports = function(app){
             'undefined_modifier_amount': 5
         });
 
-        //TODO: The getJSON function seems to be broken. Investigate further.
         res.send(aptitudeTestGenerator.getJSON());
     })
 
