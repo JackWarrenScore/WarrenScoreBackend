@@ -13,7 +13,7 @@ module.exports = class AptitudeTestGenerator {
         }
 
         let gridSolver = new GridSolver(this.shapes);
-        const solution = gridSolver.everyPossibleBoard[0];
+        const solution = gridSolver.getASolution();
         this.shapes = solution;
     }
 

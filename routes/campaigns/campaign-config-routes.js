@@ -16,12 +16,6 @@ function isConfigValid(config){
     return true;
 }
 
-//THIS ISN'T WORKING BECAUSE I NEED TO ADD THE test_length attribute to the
-//DATABASE
-//FRONTEND CONFIG PAGE
-//BACKEND INSERTION
-//UPSERT CAMPAIGN CONFIG ROUTE
-
 module.exports = function(app){ 
 
   app.post('/upsert-campaign-config', (req, res) => {
@@ -29,16 +23,16 @@ module.exports = function(app){
     const configData = req.body.configData;
     knex.insert({
       campaign_id: campaignId,
-      title: configData.TITLE,
-      description: configData.DESCRIPTION,
-      test_length: configData.TEST_LENGTH,
-      shape_max_size: configData.SHAPE_MAX,
-      plus_modifier_amount: configData["*"],
-      times_modifier_amount: configData["*"],
-      power_modifier_amount: configData["^"],
-      undefined_modifier_amount: configData["u"],
-      radius_maximum: configData.RADIUS_MAX,
-      score_type: configData.SCORE_TYPE
+      title: configData.title,
+      description: configData.description,
+      test_length: configData.test_length,
+      shape_max_size: configData.shape_max_size,
+      plus_modifier_amount: configData.plus_modifier_amount,
+      times_modifier_amount: configData.times_modifier_amount,
+      power_modifier_amount: configData.power_modifier_amount,
+      undefined_modifier_amount: configData.undefined_modifier_amount,
+      radius_maximum: configData.radius_maximum,
+      score_type: configData.score_type
     })
     .into('campaign_config')
     .onConflict('campaign_id')
