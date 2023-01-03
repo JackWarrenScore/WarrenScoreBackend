@@ -6,8 +6,8 @@ const express = require('express')
 const app = express()
 
 app.use(cors());
-app.use(bp.json())
-app.use(bp.urlencoded({ extended: true }))
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
 
 require('./routes/campaigns/campaign-config-routes')(app);
 require('./routes/campaigns/campaign-creation-routes')(app);

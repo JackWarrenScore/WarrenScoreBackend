@@ -16,18 +16,27 @@ module.exports = function(app){
     //TODONE: Send to frontend.
     app.get('/generate-available-campaign-id', (req, res) => {
         knex.insert({
-        owner: 'Jackson Ennis'
+        owner: req.query.campaignOwner
         })
         .returning('id')
         .into('campaign')
         .then(function (id) {
         const idInt = id[0].id;
 
+        console.log("We've recieved a request for a new campaign. Unique Id: ", idInt)
+
         res.send({'uniqueId': idInt})
         });
     })
 
     app.get('/get-all-campaigns', (req, res) => {
-        knex.select('campaign_id', 'title', 'shape_max_size', 'radius_maximum', 'score_type').from('campaign_config').then(data => res.send(data));
+        let {campaignOwner} = req.query;
+        console.log('/get-all-campaigns: ', campaignOwner)
+
+        knex.select('config.campaign_id', 'config.title', 'config.shape_max_size', 'config.radius_maximum', 'config.score_type')
+            .from('campaign_config as config')
+            .leftJoin('campaign as campaign', 'campaign.id', 'config.campaign_id')
+            .where('campaign.owner', '=', campaignOwner)
+            .then(data => res.send(data));
     })
 }

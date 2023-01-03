@@ -31,7 +31,7 @@ module.exports = class GridSolver {
                 availablePerimeterAnchors.splice(positionInAlreadyAvailableAnchors, 1);
             }
 
-            console.log(`Now, onto the perimeter adding portion...`)
+            // console.log(`Now, onto the perimeter adding portion...`)
             const modifierPoints = [new Point(0,1), new Point(-1,0), new Point(0,-1), new Point(1,0)];
             modifierPoints.forEach((modifierPoint) => {
                 const newPerimeterPoint = modifierPoint.plus(newlyUsedAbsolutePoint);
@@ -39,7 +39,7 @@ module.exports = class GridSolver {
                 const newPointIsAlreadyAvailable = availablePerimeterAnchors.includes(newPerimeterPoint.toString());
                 const newPointCanBeAddedToPerimeter = ! (newPointIsAlreadyUsed || newPointIsAlreadyAvailable);
                 if(newPointCanBeAddedToPerimeter){
-                    console.log(`Adding ${newPerimeterPoint} to available perimeters`)
+                    // console.log(`Adding ${newPerimeterPoint} to available perimeters`)
                     availablePerimeterAnchors.push(newPerimeterPoint);
                 }
             })
@@ -48,7 +48,7 @@ module.exports = class GridSolver {
     
     getASolution(){
 
-        let availablePerimeterAnchors = [new Point(0, 0)];
+        let availablePerimeterAnchors = [new Point(5, 5)];
         let usedAbsolutePoints = []
         let availableShapes = _.cloneDeep(this.shapes)
         let board = [];
@@ -60,7 +60,7 @@ module.exports = class GridSolver {
                 const prospectiveAnchor = availablePerimeterAnchors[i];
 
                 if(this.checkIfShapeCanBePlaced(shape, prospectiveAnchor, usedAbsolutePoints)){
-                    console.log(`Placing shape index ${i}`)
+                    // console.log(`Placing shape index ${i}`)
                     this.placeShape(shape, prospectiveAnchor, usedAbsolutePoints, availablePerimeterAnchors);
                     board.push(shape);
                     break;

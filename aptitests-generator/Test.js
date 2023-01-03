@@ -19,17 +19,17 @@ const config = {
 let shapes = [];
 for(let i = 0; i < config.test_length; i++){
     let shape = new Shape(config);
-    console.log(`Shape ${i} has ${shape.getTiles().length} tiles`)
+    // console.log(`Shape ${i} has ${shape.getTiles().length} tiles`)
     shapes.push(shape);
 }
 
 gridSolver = new GridSolver(shapes);
 
-console.log("Nice.");
+// console.log("Nice.");
 
 const solution = gridSolver.everyPossibleBoard[0];
 
-solution.forEach((shape) => {
-    console.log(shape.getShapeJSON())
-})
+// solution.forEach((shape) => {
+//     console.log(shape.getShapeJSON())
+// })
 
